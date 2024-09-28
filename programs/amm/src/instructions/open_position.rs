@@ -184,7 +184,26 @@ pub struct OpenPositionV2<'info> {
     /// CHECK: Receives the position NFT
     pub position_nft_owner: UncheckedAccount<'info>,
 
-  
+    /// Unique token mint address
+    #[account(
+        init,
+        mint::decimals = 0,
+        mint::authority = pool_state.key(),
+        payer = payer,
+        mint::token_program = token_program,
+    )]
+    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
+
+    /// Token account where position NFT will be minted
+    /// This account created in the contract by cpi to avoid large stack variables
+    #[account(
+        init,
+        associated_token::mint = position_nft_mint,
+        associated_token::authority = position_nft_owner,
+        payer = payer,
+        token::token_program = token_program,
+    )]
+    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// To store metaplex metadata
     /// CHECK: Safety check performed inside function body
@@ -197,7 +216,20 @@ pub struct OpenPositionV2<'info> {
 
 
 
-
+    /// Store the information of market marking in range
+    #[account(
+        init_if_needed,
+        seeds = [
+            POSITION_SEED.as_bytes(),
+            pool_state.key().as_ref(),
+            &tick_lower_index.to_be_bytes(),
+            &tick_upper_index.to_be_bytes(),
+        ],
+        bump,
+        payer = payer,
+        space = ProtocolPositionState::LEN
+    )]
+    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
     /// CHECK: Account to mark the lower tick as initialized
     #[account(
@@ -223,42 +255,24 @@ pub struct OpenPositionV2<'info> {
     )]
     pub tick_array_upper: UncheckedAccount<'info>,
 
+    /// personal position state
+    #[account(
+        init,
+        seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
+        bump,
+        payer = payer,
+        space = PersonalPositionState::LEN
+    )]
+    pub personal_position: Box<Account<'info, PersonalPositionState>>,
+
+    /// The token_0 account deposit token to the pool
+    #[account(
+        mut,
+        token::mint = token_vault_0.mint
+    )]
+    pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
 
-  /// Unique token mint address
-  #[account(
-    init,
-    mint::decimals = 0,
-    mint::authority = pool_state.key(),
-    payer = payer,
-    mint::token_program = token_program,
-)]
-pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
-
-/// Token account where position NFT will be minted
-/// This account created in the contract by cpi to avoid large stack variables
-#[account(
-    init,
-    associated_token::mint = position_nft_mint,
-    associated_token::authority = position_nft_owner,
-    payer = payer,
-    token::token_program = token_program,
-)]
-pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
-      /// Store the information of market marking in range
-#[account(
-    init_if_needed,
-    seeds = [
-        POSITION_SEED.as_bytes(),
-        pool_state.key().as_ref(),
-        &tick_lower_index.to_be_bytes(),
-        &tick_upper_index.to_be_bytes(),
-    ],
-    bump,
-    payer = payer,
-    space = ProtocolPositionState::LEN
-)]
-pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
    
     /// Program to create mint account and mint tokens
@@ -277,23 +291,6 @@ pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
       /*
 
-
-          /// personal position state
-    #[account(
-        init,
-        seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
-        bump,
-        payer = payer,
-        space = PersonalPositionState::LEN
-    )]
-    pub personal_position: Box<Account<'info, PersonalPositionState>>,
-
-    /// The token_0 account deposit token to the pool
-    #[account(
-        mut,
-        token::mint = token_vault_0.mint
-    )]
-    pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
     /// The token_1 account deposit token to the pool
     #[account(
         mut,
