@@ -179,20 +179,7 @@ pub struct OpenPositionV2<'info> {
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
 
-    /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+
 
 
     /// personal position state
@@ -234,6 +221,21 @@ pub struct OpenPositionV2<'info> {
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     /*
+        /// Store the information of market marking in range
+    #[account(
+        init_if_needed,
+        seeds = [
+            POSITION_SEED.as_bytes(),
+            pool_state.key().as_ref(),
+            &tick_lower_index.to_be_bytes(),
+            &tick_upper_index.to_be_bytes(),
+        ],
+        bump,
+        payer = payer,
+        space = ProtocolPositionState::LEN
+    )]
+    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+    
         /// Unique token mint address
     #[account(
         init,
