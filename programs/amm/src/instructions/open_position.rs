@@ -212,6 +212,17 @@ pub struct OpenPositionV2<'info> {
 )]
 pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
+/// personal position state
+#[account(
+    init,
+    seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
+    bump,
+    payer = payer,
+    space = PersonalPositionState::LEN
+)]
+pub personal_position2: Box<Account<'info, PersonalPositionState>>,
+
+// 952
         /// Unique token mint address
         #[account(
             init,
@@ -222,15 +233,6 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         )]
         pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
-        /// Unique token mint address
-        #[account(
-            init,
-            mint::decimals = 0,
-            mint::authority = pool_state.key(),
-            payer = payer,
-            mint::token_program = token_program,
-        )]
-        pub position_nft_mint2: Box<InterfaceAccount<'info, Mint>>,
 
 
 // 944
