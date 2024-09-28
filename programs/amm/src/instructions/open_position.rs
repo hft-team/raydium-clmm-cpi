@@ -159,35 +159,16 @@ pub struct OpenPosition<'info> {
 }
 
 #[derive(Accounts)]
-#[instruction(tick_lower_index: i32, tick_upper_index: i32,tick_array_lower_start_index:i32,tick_array_upper_start_index:i32)]
+//#[instruction(tick_lower_index: i32, tick_upper_index: i32,tick_array_lower_start_index:i32,tick_array_upper_start_index:i32)]
 pub struct OpenPositionV2<'info> {
     /// Pays to mint the position
     #[account(mut)]
     pub payer: Signer<'info>,
-/*
+
     /// CHECK: Receives the position NFT
     pub position_nft_owner: UncheckedAccount<'info>,
 
-    /// Unique token mint address
-    #[account(
-        init,
-        mint::decimals = 0,
-        mint::authority = pool_state.key(),
-        payer = payer,
-        mint::token_program = token_program,
-    )]
-    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
-    /// Token account where position NFT will be minted
-    /// This account created in the contract by cpi to avoid large stack variables
-    #[account(
-        init,
-        associated_token::mint = position_nft_mint,
-        associated_token::authority = position_nft_owner,
-        payer = payer,
-        token::token_program = token_program,
-    )]
-    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// To store metaplex metadata
     /// CHECK: Safety check performed inside function body
@@ -213,29 +194,6 @@ pub struct OpenPositionV2<'info> {
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
-    /// CHECK: Account to mark the lower tick as initialized
-    #[account(
-        mut,
-        seeds = [
-            TICK_ARRAY_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_array_lower_start_index.to_be_bytes(),
-        ],
-        bump,
-    )]
-    pub tick_array_lower: UncheckedAccount<'info>,
-
-    /// CHECK:Account to store data for the position's upper tick
-    #[account(
-        mut,
-        seeds = [
-            TICK_ARRAY_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_array_upper_start_index.to_be_bytes(),
-        ],
-        bump,
-    )]
-    pub tick_array_upper: UncheckedAccount<'info>,
 
     /// personal position state
     #[account(
@@ -265,7 +223,6 @@ pub struct OpenPositionV2<'info> {
     pub metadata_program: Program<'info, Metadata>,
     /// Program to create mint account and mint tokens
     pub token_program_2022: Program<'info, Token2022>,
-    */
 
     // remaining account
     // #[account(
@@ -277,7 +234,50 @@ pub struct OpenPositionV2<'info> {
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     /*
+        /// Unique token mint address
+    #[account(
+        init,
+        mint::decimals = 0,
+        mint::authority = pool_state.key(),
+        payer = payer,
+        mint::token_program = token_program,
+    )]
+    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
+    /// Token account where position NFT will be minted
+    /// This account created in the contract by cpi to avoid large stack variables
+    #[account(
+        init,
+        associated_token::mint = position_nft_mint,
+        associated_token::authority = position_nft_owner,
+        payer = payer,
+        token::token_program = token_program,
+    )]
+    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    /// CHECK: Account to mark the lower tick as initialized
+    #[account(
+        mut,
+        seeds = [
+            TICK_ARRAY_SEED.as_bytes(),
+            pool_state.key().as_ref(),
+            &tick_array_lower_start_index.to_be_bytes(),
+        ],
+        bump,
+    )]
+    pub tick_array_lower: UncheckedAccount<'info>,
+
+    /// CHECK:Account to store data for the position's upper tick
+    #[account(
+        mut,
+        seeds = [
+            TICK_ARRAY_SEED.as_bytes(),
+            pool_state.key().as_ref(),
+            &tick_array_upper_start_index.to_be_bytes(),
+        ],
+        bump,
+    )]
+    pub tick_array_upper: UncheckedAccount<'info>,
     
     /// The mint of token vault 0
     #[account(
