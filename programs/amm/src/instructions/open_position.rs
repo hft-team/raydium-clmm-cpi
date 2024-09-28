@@ -182,15 +182,6 @@ pub struct OpenPositionV2<'info> {
 
 
 
-    /// personal position state
-    #[account(
-        init,
-        seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
-        bump,
-        payer = payer,
-        space = PersonalPositionState::LEN
-    )]
-    pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
 
 
@@ -221,6 +212,18 @@ pub struct OpenPositionV2<'info> {
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     /*
+
+
+    /// personal position state
+    #[account(
+        init,
+        seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
+        bump,
+        payer = payer,
+        space = PersonalPositionState::LEN
+    )]
+    pub personal_position: Box<Account<'info, PersonalPositionState>>,
+    
         /// Store the information of market marking in range
     #[account(
         init_if_needed,
@@ -235,7 +238,7 @@ pub struct OpenPositionV2<'info> {
         space = ProtocolPositionState::LEN
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
-    
+
         /// Unique token mint address
     #[account(
         init,
