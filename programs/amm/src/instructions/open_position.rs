@@ -272,25 +272,6 @@ pub struct OpenPositionV2<'info> {
     )]
     pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
-
-
-   
-    /// Program to create mint account and mint tokens
-    pub token_program_2022: Program<'info, Token2022>,
-    /// The mint of token vault 0
-
-
-    // remaining account
-    // #[account(
-    //     seeds = [
-    //         POOL_TICK_ARRAY_BITMAP_SEED.as_bytes(),
-    //         pool_state.key().as_ref(),
-    //     ],
-    //     bump
-    // )]
-    // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
-      /*
-
     /// The token_1 account deposit token to the pool
     #[account(
         mut,
@@ -311,6 +292,8 @@ pub struct OpenPositionV2<'info> {
         constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
+
+      
     #[account(
         address = token_vault_0.mint
     )]
@@ -320,6 +303,23 @@ pub struct OpenPositionV2<'info> {
         address = token_vault_1.mint
     )]
     pub vault_1_mint: Box<InterfaceAccount<'info, Mint>>,
+    /// Program to create mint account and mint tokens
+    pub token_program_2022: Program<'info, Token2022>,
+    /// The mint of token vault 0
+
+
+    // remaining account
+    // #[account(
+    //     seeds = [
+    //         POOL_TICK_ARRAY_BITMAP_SEED.as_bytes(),
+    //         pool_state.key().as_ref(),
+    //     ],
+    //     bump
+    // )]
+    // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
+      /*
+
+   
     */
 }
 
