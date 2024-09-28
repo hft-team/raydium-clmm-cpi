@@ -267,7 +267,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
     
 
-   */
+640
 
 
 
@@ -333,7 +333,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
- 
+ */
 }
 
 /// Add liquidity to an initialized pool
