@@ -247,33 +247,7 @@ pub struct OpenPositionV2<'info> {
     )]
     pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
-    /// The token_0 account deposit token to the pool
-    #[account(
-        mut,
-        // token::mint = token_vault_0.mint
-    )]
-    pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
-    /// The token_1 account deposit token to the pool
-    #[account(
-        mut,
-        // token::mint = token_vault_1.mint
-    )]
-    pub token_account_1: Box<InterfaceAccount<'info, TokenAccount>>,
-
-    /// The address that holds pool tokens for token_0
-    #[account(
-        mut,
-        // constraint = token_vault_0.key() == pool_state.load()?.token_vault_0
-    )]
-    pub token_vault_0: Box<InterfaceAccount<'info, TokenAccount>>,
-
-    /// The address that holds pool tokens for token_1
-    #[account(
-        mut,
-        // constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
-    )]
-    pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// Sysvar for token mint and ATA creation
     pub rent: Sysvar<'info, Rent>,
@@ -291,16 +265,7 @@ pub struct OpenPositionV2<'info> {
     pub metadata_program: Program<'info, Metadata>,
     /// Program to create mint account and mint tokens
     pub token_program_2022: Program<'info, Token2022>,
-    /// The mint of token vault 0
-    #[account(
-        address = token_vault_0.mint
-    )]
-    pub vault_0_mint: Box<InterfaceAccount<'info, Mint>>,
-    /// The mint of token vault 1
-    #[account(
-        address = token_vault_1.mint
-    )]
-    pub vault_1_mint: Box<InterfaceAccount<'info, Mint>>,
+
     // remaining account
     // #[account(
     //     seeds = [
@@ -312,8 +277,45 @@ pub struct OpenPositionV2<'info> {
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     /*
 
-
     
+    /// The mint of token vault 0
+    #[account(
+        address = token_vault_0.mint
+    )]
+    pub vault_0_mint: Box<InterfaceAccount<'info, Mint>>,
+    /// The mint of token vault 1
+    #[account(
+        address = token_vault_1.mint
+    )]
+    pub vault_1_mint: Box<InterfaceAccount<'info, Mint>>,
+
+        /// The token_0 account deposit token to the pool
+    #[account(
+        mut,
+        token::mint = token_vault_0.mint
+    )]
+    pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    /// The token_1 account deposit token to the pool
+    #[account(
+        mut,
+        token::mint = token_vault_1.mint
+    )]
+    pub token_account_1: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    /// The address that holds pool tokens for token_0
+    #[account(
+        mut,
+        constraint = token_vault_0.key() == pool_state.load()?.token_vault_0
+    )]
+    pub token_vault_0: Box<InterfaceAccount<'info, TokenAccount>>,
+
+    /// The address that holds pool tokens for token_1
+    #[account(
+        mut,
+        constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
+    )]
+    pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
     */
 }
 
