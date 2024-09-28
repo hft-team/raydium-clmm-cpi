@@ -164,7 +164,7 @@ pub struct OpenPositionV2<'info> {
     /// Pays to mint the position
     #[account(mut)]
     pub payer: Signer<'info>,
-
+/*
     /// CHECK: Receives the position NFT
     pub position_nft_owner: UncheckedAccount<'info>,
 
@@ -265,6 +265,7 @@ pub struct OpenPositionV2<'info> {
     pub metadata_program: Program<'info, Metadata>,
     /// Program to create mint account and mint tokens
     pub token_program_2022: Program<'info, Token2022>,
+    */
 
     // remaining account
     // #[account(
