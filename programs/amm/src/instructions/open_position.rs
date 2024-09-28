@@ -161,22 +161,6 @@ pub struct OpenPosition<'info> {
 #[derive(Accounts)]
 #[instruction(tick_lower_index: i32, tick_upper_index: i32,tick_array_lower_start_index:i32,tick_array_upper_start_index:i32)]
 pub struct OpenPositionV2<'info> {
-         /// Sysvar for token mint and ATA creation
-         pub rent: Sysvar<'info, Rent>,
-
-         /// Program to create the position manager state account
-         pub system_program: Program<'info, System>,
-     
-         /// Program to create mint account and mint tokens
-         pub token_program: Program<'info, Token>,
-         /// Program to create an ATA for receiving position NFT
-         pub associated_token_program: Program<'info, AssociatedToken>,
-     
-     
-         /// Program to create NFT metadata
-         /// CHECK: Metadata program address constraint applied
-         pub metadata_program: Program<'info, Metadata>,
-
     /// Pays to mint the position
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -213,8 +197,6 @@ pub struct OpenPositionV2<'info> {
     /// Add liquidity for this pool
     #[account(mut)]
     pub pool_state: AccountLoader<'info, PoolState>,
-
-
 
     /// Store the information of market marking in range
     #[account(
@@ -278,7 +260,7 @@ pub struct OpenPositionV2<'info> {
         token::mint = token_vault_1.mint
     )]
     pub token_account_1: Box<InterfaceAccount<'info, TokenAccount>>,
-  
+
     /// The address that holds pool tokens for token_0
     #[account(
         mut,
@@ -293,7 +275,23 @@ pub struct OpenPositionV2<'info> {
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
 
-      
+    /// Sysvar for token mint and ATA creation
+    pub rent: Sysvar<'info, Rent>,
+
+    /// Program to create the position manager state account
+    pub system_program: Program<'info, System>,
+
+    /// Program to create mint account and mint tokens
+    pub token_program: Program<'info, Token>,
+    /// Program to create an ATA for receiving position NFT
+    pub associated_token_program: Program<'info, AssociatedToken>,
+
+    /// Program to create NFT metadata
+    /// CHECK: Metadata program address constraint applied
+    pub metadata_program: Program<'info, Metadata>,
+    /// Program to create mint account and mint tokens
+    pub token_program_2022: Program<'info, Token2022>,
+    /// The mint of token vault 0
     #[account(
         address = token_vault_0.mint
     )]
@@ -303,11 +301,6 @@ pub struct OpenPositionV2<'info> {
         address = token_vault_1.mint
     )]
     pub vault_1_mint: Box<InterfaceAccount<'info, Mint>>,
-    /// Program to create mint account and mint tokens
-    pub token_program_2022: Program<'info, Token2022>,
-    /// The mint of token vault 0
-
-
     // remaining account
     // #[account(
     //     seeds = [
@@ -317,9 +310,7 @@ pub struct OpenPositionV2<'info> {
     //     bump
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
-      /*
-
-   
+    /*
     */
 }
 
