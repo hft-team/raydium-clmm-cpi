@@ -251,6 +251,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
     pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
 
+    //// 872
             /// Token account where position NFT will be minted
     /// This account created in the contract by cpi to avoid large stack variables
     #[account(
@@ -266,7 +267,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
     
 
-
+   */
 
 
 
@@ -332,7 +333,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
-    */
+ 
 }
 
 /// Add liquidity to an initialized pool
