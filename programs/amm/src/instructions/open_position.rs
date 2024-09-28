@@ -159,7 +159,7 @@ pub struct OpenPosition<'info> {
 }
 
 #[derive(Accounts)]
-//#[instruction(tick_lower_index: i32, tick_upper_index: i32,tick_array_lower_start_index:i32,tick_array_upper_start_index:i32)]
+#[instruction(tick_lower_index: i32, tick_upper_index: i32,tick_array_lower_start_index:i32,tick_array_upper_start_index:i32)]
 pub struct OpenPositionV2<'info> {
     /// Pays to mint the position
     #[account(mut)]
@@ -221,10 +221,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
             mint::token_program = token_program,
         )]
         pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
-    /*
 
-
-    
 
         /// Store the information of market marking in range
     #[account(
@@ -241,9 +238,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
-
-
-    /// Token account where position NFT will be minted
+        /// Token account where position NFT will be minted
     /// This account created in the contract by cpi to avoid large stack variables
     #[account(
         init,
@@ -253,6 +248,17 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         token::token_program = token_program,
     )]
     pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+
+
+    /*
+
+
+    
+
+
+
+
+
 
     /// CHECK: Account to mark the lower tick as initialized
     #[account(
