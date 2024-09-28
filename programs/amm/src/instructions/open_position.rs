@@ -251,6 +251,16 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
     pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
 
 
+            /// Token account where position NFT will be minted
+    /// This account created in the contract by cpi to avoid large stack variables
+    #[account(
+        init,
+        associated_token::mint = position_nft_mint,
+        associated_token::authority = position_nft_owner,
+        payer = payer,
+        token::token_program = token_program,
+    )]
+    pub position_nft_account2: Box<InterfaceAccount<'info, TokenAccount>>,
     /*
 
 
