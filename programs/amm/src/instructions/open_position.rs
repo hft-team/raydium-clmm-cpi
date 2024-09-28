@@ -222,7 +222,18 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         )]
         pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
+        /// Unique token mint address
+        #[account(
+            init,
+            mint::decimals = 0,
+            mint::authority = pool_state.key(),
+            payer = payer,
+            mint::token_program = token_program,
+        )]
+        pub position_nft_mint2: Box<InterfaceAccount<'info, Mint>>,
 
+
+// 944
         /// Store the information of market marking in range
     #[account(
         init_if_needed,
@@ -238,19 +249,7 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position2: Box<Account<'info, ProtocolPositionState>>,
+    
 
 
         /// Token account where position NFT will be minted
