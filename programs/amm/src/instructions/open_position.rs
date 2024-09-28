@@ -202,6 +202,7 @@ pub struct OpenPositionV2<'info> {
     /// Program to create mint account and mint tokens
     pub token_program_2022: Program<'info, Token2022>,
 
+    // 800
 /// personal position state
 #[account(
     init,
@@ -212,15 +213,6 @@ pub struct OpenPositionV2<'info> {
 )]
 pub personal_position: Box<Account<'info, PersonalPositionState>>,
 
-/// personal position state
-#[account(
-    init,
-    seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
-    bump,
-    payer = payer,
-    space = PersonalPositionState::LEN
-)]
-pub personal_position2: Box<Account<'info, PersonalPositionState>>,
 
 // 952
         /// Unique token mint address
