@@ -250,28 +250,28 @@ pub struct OpenPositionV2<'info> {
     /// The token_0 account deposit token to the pool
     #[account(
         mut,
-        token::mint = token_vault_0.mint
+        // token::mint = token_vault_0.mint
     )]
     pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// The token_1 account deposit token to the pool
     #[account(
         mut,
-        token::mint = token_vault_1.mint
+        // token::mint = token_vault_1.mint
     )]
     pub token_account_1: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// The address that holds pool tokens for token_0
     #[account(
         mut,
-        constraint = token_vault_0.key() == pool_state.load()?.token_vault_0
+        // constraint = token_vault_0.key() == pool_state.load()?.token_vault_0
     )]
     pub token_vault_0: Box<InterfaceAccount<'info, TokenAccount>>,
 
     /// The address that holds pool tokens for token_1
     #[account(
         mut,
-        constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
+        // constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
 
@@ -311,6 +311,9 @@ pub struct OpenPositionV2<'info> {
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     /*
+
+
+    
     */
 }
 
