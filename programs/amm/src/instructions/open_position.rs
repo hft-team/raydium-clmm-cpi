@@ -209,7 +209,7 @@ pub struct OpenPositionV2<'info> {
         ],
         bump,
         //payer = payer,
-        space = ProtocolPositionState::LEN
+        //space = ProtocolPositionState::LEN
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
