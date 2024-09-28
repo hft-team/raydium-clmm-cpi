@@ -225,7 +225,40 @@ pub struct OpenPositionV2<'info> {
 
 
 
+  /// Unique token mint address
+  #[account(
+    init,
+    mint::decimals = 0,
+    mint::authority = pool_state.key(),
+    payer = payer,
+    mint::token_program = token_program,
+)]
+pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
+/// Token account where position NFT will be minted
+/// This account created in the contract by cpi to avoid large stack variables
+#[account(
+    init,
+    associated_token::mint = position_nft_mint,
+    associated_token::authority = position_nft_owner,
+    payer = payer,
+    token::token_program = token_program,
+)]
+pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+      /// Store the information of market marking in range
+#[account(
+    init_if_needed,
+    seeds = [
+        POSITION_SEED.as_bytes(),
+        pool_state.key().as_ref(),
+        &tick_lower_index.to_be_bytes(),
+        &tick_upper_index.to_be_bytes(),
+    ],
+    bump,
+    payer = payer,
+    space = ProtocolPositionState::LEN
+)]
+pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
    
     /// Program to create mint account and mint tokens
@@ -243,40 +276,8 @@ pub struct OpenPositionV2<'info> {
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
       /*
-  /// Unique token mint address
-    #[account(
-        init,
-        mint::decimals = 0,
-        mint::authority = pool_state.key(),
-        payer = payer,
-        mint::token_program = token_program,
-    )]
-    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
 
-    /// Token account where position NFT will be minted
-    /// This account created in the contract by cpi to avoid large stack variables
-    #[account(
-        init,
-        associated_token::mint = position_nft_mint,
-        associated_token::authority = position_nft_owner,
-        payer = payer,
-        token::token_program = token_program,
-    )]
-    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
-          /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+
           /// personal position state
     #[account(
         init,
