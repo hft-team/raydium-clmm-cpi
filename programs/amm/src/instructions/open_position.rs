@@ -200,7 +200,7 @@ pub struct OpenPositionV2<'info> {
 
     /// Store the information of market marking in range
     #[account(
-        init_if_needed,
+        //init_if_needed,
         seeds = [
             POSITION_SEED.as_bytes(),
             pool_state.key().as_ref(),
@@ -208,7 +208,7 @@ pub struct OpenPositionV2<'info> {
             &tick_upper_index.to_be_bytes(),
         ],
         bump,
-        payer = payer,
+        //payer = payer,
         space = ProtocolPositionState::LEN
     )]
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
