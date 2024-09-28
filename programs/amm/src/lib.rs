@@ -282,18 +282,7 @@ pub mod amm_v3 {
         amount_0_max: u64,
         amount_1_max: u64,
     ) -> Result<()> {
-        instructions::open_position_v1(
-            ctx,
-            liquidity,
-            amount_0_max,
-            amount_1_max,
-            tick_lower_index,
-            tick_upper_index,
-            tick_array_lower_start_index,
-            tick_array_upper_start_index,
-            true,
-            None,
-        )
+        Ok(())
     }
 
     /// Creates a new position wrapped in a NFT, support Token2022
@@ -322,18 +311,7 @@ pub mod amm_v3 {
         with_matedata: bool,
         base_flag: Option<bool>,
     ) -> Result<()> {
-        instructions::open_position_v2(
-            ctx,
-            liquidity,
-            amount_0_max,
-            amount_1_max,
-            tick_lower_index,
-            tick_upper_index,
-            tick_array_lower_start_index,
-            tick_array_upper_start_index,
-            with_matedata,
-            base_flag,
-        )
+        Ok(())
     }
 
     /// Close a position, the nft mint and nft account
