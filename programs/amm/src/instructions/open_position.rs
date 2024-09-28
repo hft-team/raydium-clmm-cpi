@@ -176,7 +176,7 @@ pub struct OpenPositionV2<'info> {
          /// Program to create NFT metadata
          /// CHECK: Metadata program address constraint applied
          pub metadata_program: Program<'info, Metadata>,
-         
+
     /// Pays to mint the position
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -184,26 +184,7 @@ pub struct OpenPositionV2<'info> {
     /// CHECK: Receives the position NFT
     pub position_nft_owner: UncheckedAccount<'info>,
 
-    /// Unique token mint address
-    #[account(
-        init,
-        mint::decimals = 0,
-        mint::authority = pool_state.key(),
-        payer = payer,
-        mint::token_program = token_program,
-    )]
-    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
-
-    /// Token account where position NFT will be minted
-    /// This account created in the contract by cpi to avoid large stack variables
-    #[account(
-        init,
-        associated_token::mint = position_nft_mint,
-        associated_token::authority = position_nft_owner,
-        payer = payer,
-        token::token_program = token_program,
-    )]
-    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+  
 
     /// To store metaplex metadata
     /// CHECK: Safety check performed inside function body
@@ -215,21 +196,8 @@ pub struct OpenPositionV2<'info> {
     pub pool_state: AccountLoader<'info, PoolState>,
 
 
-  /*
-    /// Store the information of market marking in range
-    #[account(
-        init_if_needed,
-        seeds = [
-            POSITION_SEED.as_bytes(),
-            pool_state.key().as_ref(),
-            &tick_lower_index.to_be_bytes(),
-            &tick_upper_index.to_be_bytes(),
-        ],
-        bump,
-        payer = payer,
-        space = ProtocolPositionState::LEN
-    )]
-    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+
+
 
     /// CHECK: Account to mark the lower tick as initialized
     #[account(
@@ -255,7 +223,61 @@ pub struct OpenPositionV2<'info> {
     )]
     pub tick_array_upper: UncheckedAccount<'info>,
 
-    /// personal position state
+
+
+
+
+   
+    /// Program to create mint account and mint tokens
+    pub token_program_2022: Program<'info, Token2022>,
+    /// The mint of token vault 0
+
+
+    // remaining account
+    // #[account(
+    //     seeds = [
+    //         POOL_TICK_ARRAY_BITMAP_SEED.as_bytes(),
+    //         pool_state.key().as_ref(),
+    //     ],
+    //     bump
+    // )]
+    // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
+      /*
+  /// Unique token mint address
+    #[account(
+        init,
+        mint::decimals = 0,
+        mint::authority = pool_state.key(),
+        payer = payer,
+        mint::token_program = token_program,
+    )]
+    pub position_nft_mint: Box<InterfaceAccount<'info, Mint>>,
+
+    /// Token account where position NFT will be minted
+    /// This account created in the contract by cpi to avoid large stack variables
+    #[account(
+        init,
+        associated_token::mint = position_nft_mint,
+        associated_token::authority = position_nft_owner,
+        payer = payer,
+        token::token_program = token_program,
+    )]
+    pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+          /// Store the information of market marking in range
+    #[account(
+        init_if_needed,
+        seeds = [
+            POSITION_SEED.as_bytes(),
+            pool_state.key().as_ref(),
+            &tick_lower_index.to_be_bytes(),
+            &tick_upper_index.to_be_bytes(),
+        ],
+        bump,
+        payer = payer,
+        space = ProtocolPositionState::LEN
+    )]
+    pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
+          /// personal position state
     #[account(
         init,
         seeds = [POSITION_SEED.as_bytes(), position_nft_mint.key().as_ref()],
@@ -271,7 +293,6 @@ pub struct OpenPositionV2<'info> {
         token::mint = token_vault_0.mint
     )]
     pub token_account_0: Box<InterfaceAccount<'info, TokenAccount>>,
-
     /// The token_1 account deposit token to the pool
     #[account(
         mut,
@@ -292,11 +313,6 @@ pub struct OpenPositionV2<'info> {
         constraint = token_vault_1.key() == pool_state.load()?.token_vault_1
     )]
     pub token_vault_1: Box<InterfaceAccount<'info, TokenAccount>>,
-
-   
-    /// Program to create mint account and mint tokens
-    pub token_program_2022: Program<'info, Token2022>,
-    /// The mint of token vault 0
     #[account(
         address = token_vault_0.mint
     )]
@@ -306,15 +322,6 @@ pub struct OpenPositionV2<'info> {
         address = token_vault_1.mint
     )]
     pub vault_1_mint: Box<InterfaceAccount<'info, Mint>>,
-    // remaining account
-    // #[account(
-    //     seeds = [
-    //         POOL_TICK_ARRAY_BITMAP_SEED.as_bytes(),
-    //         pool_state.key().as_ref(),
-    //     ],
-    //     bump
-    // )]
-    // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
     */
 }
 
