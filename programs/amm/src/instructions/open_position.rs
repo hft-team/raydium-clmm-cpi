@@ -286,6 +286,7 @@ pub struct OpenPositionV2<'info> {
     /// Program to create an ATA for receiving position NFT
     pub associated_token_program: Program<'info, AssociatedToken>,
 
+    /*
     /// Program to create NFT metadata
     /// CHECK: Metadata program address constraint applied
     pub metadata_program: Program<'info, Metadata>,
@@ -310,6 +311,7 @@ pub struct OpenPositionV2<'info> {
     //     bump
     // )]
     // pub tick_array_bitmap: AccountLoader<'info, TickArrayBitmapExtension>,
+    */
 }
 
 /// Add liquidity to an initialized pool
