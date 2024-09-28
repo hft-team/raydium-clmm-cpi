@@ -239,15 +239,6 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
     pub protocol_position: Box<Account<'info, ProtocolPositionState>>,
 
 
-
-
-    /*
-
-
-    
-
-
-
         /// Token account where position NFT will be minted
     /// This account created in the contract by cpi to avoid large stack variables
     #[account(
@@ -258,6 +249,15 @@ pub personal_position: Box<Account<'info, PersonalPositionState>>,
         token::token_program = token_program,
     )]
     pub position_nft_account: Box<InterfaceAccount<'info, TokenAccount>>,
+
+
+    /*
+
+
+    
+
+
+
 
 
     /// CHECK: Account to mark the lower tick as initialized
