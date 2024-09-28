@@ -246,7 +246,7 @@ pub struct OpenPositionV2<'info> {
         space = PersonalPositionState::LEN
     )]
     pub personal_position: Box<Account<'info, PersonalPositionState>>,
-
+  /*
     /// The token_0 account deposit token to the pool
     #[account(
         mut,
@@ -260,7 +260,7 @@ pub struct OpenPositionV2<'info> {
         token::mint = token_vault_1.mint
     )]
     pub token_account_1: Box<InterfaceAccount<'info, TokenAccount>>,
-
+  
     /// The address that holds pool tokens for token_0
     #[account(
         mut,
@@ -286,7 +286,7 @@ pub struct OpenPositionV2<'info> {
     /// Program to create an ATA for receiving position NFT
     pub associated_token_program: Program<'info, AssociatedToken>,
 
-    /*
+
     /// Program to create NFT metadata
     /// CHECK: Metadata program address constraint applied
     pub metadata_program: Program<'info, Metadata>,
