@@ -202,6 +202,8 @@ pub struct OpenPositionV2<'info> {
     /// Program to create mint account and mint tokens
     pub token_program_2022: Program<'info, Token2022>,
 
+    pub token_program_20221: Program<'info, Token2022>,
+
     // 800
 /// personal position state
 #[account(
