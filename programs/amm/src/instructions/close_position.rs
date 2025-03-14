@@ -54,48 +54,5 @@ pub struct ClosePosition<'info> {
 pub fn close_position<'a, 'b, 'c, 'info>(
     ctx: Context<'a, 'b, 'c, 'info, ClosePosition<'info>>,
 ) -> Result<()> {
-    if ctx.accounts.personal_position.liquidity != 0
-        || ctx.accounts.personal_position.token_fees_owed_0 != 0
-        || ctx.accounts.personal_position.token_fees_owed_1 != 0
-    {
-        msg!(
-            "remaing liquidity:{},token_fees_owed_0:{},token_fees_owed_1:{}",
-            ctx.accounts.personal_position.liquidity,
-            ctx.accounts.personal_position.token_fees_owed_0,
-            ctx.accounts.personal_position.token_fees_owed_1
-        );
-        return err!(ErrorCode::ClosePositionErr);
-    }
-
-    for i in 0..ctx.accounts.personal_position.reward_infos.len() {
-        if ctx.accounts.personal_position.reward_infos[i].reward_amount_owed != 0 {
-            msg!(
-                "remaing reward index:{},amount:{}",
-                i,
-                ctx.accounts.personal_position.reward_infos[i].reward_amount_owed,
-            );
-            return err!(ErrorCode::ClosePositionErr);
-        }
-    }
-
-    burn(
-        &ctx.accounts.nft_owner,
-        &ctx.accounts.position_nft_mint,
-        &ctx.accounts.position_nft_account,
-        &ctx.accounts.token_program,
-        // &ctx.accounts.token_program_2022,
-        &[],
-        1,
-    )?;
-
-    close_spl_account(
-        &ctx.accounts.nft_owner,
-        &ctx.accounts.nft_owner,
-        &ctx.accounts.position_nft_account,
-        &ctx.accounts.token_program,
-        // &ctx.accounts.token_program_2022,
-        &[],
-    )?;
-
     Ok(())
 }
