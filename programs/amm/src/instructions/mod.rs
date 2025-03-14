@@ -36,3 +36,6 @@ pub use collect_remaining_rewards::*;
 
 pub mod admin;
 pub use admin::*;
+
+pub mod open_position_with_token22_nft;
+pub use open_position_with_token22_nft::*;
