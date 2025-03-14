@@ -22,8 +22,8 @@ pub struct ClosePosition<'info> {
     /// Token account where position NFT will be minted
     #[account(
         mut,
-        associated_token::mint = position_nft_mint,
-        associated_token::authority = nft_owner,
+        token::mint = position_nft_mint,
+        token::authority = nft_owner,
         constraint = position_nft_account.amount == 1,
         token::token_program = token_program,
     )]
