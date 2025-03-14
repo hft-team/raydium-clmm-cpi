@@ -46,7 +46,7 @@ pub struct ClosePosition<'info> {
     /// Program to create the position manager state account
     pub system_program: Program<'info, System>,
     /// Program to create mint account and mint tokens
-    pub token_program: Program<'info, Token>,
+    pub token_program: Interface<'info, anchor_spl::token_interface::TokenInterface>,
     // /// Reserved for upgrade
     // pub token_program_2022: Program<'info, Token2022>,
 }
